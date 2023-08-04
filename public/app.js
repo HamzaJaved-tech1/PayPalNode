@@ -126,6 +126,9 @@ if (paypal.HostedFields.isEligible()) {
           },
         })
         .then(() => {
+          const myButton = document.getElementById("formPayButton");
+          myButton.disabled = true;
+          myButton.style = "background: aliceblue";
           fetch(`/api/orders/${orderId}/capture`, {
             method: "post",
           })
@@ -145,11 +148,17 @@ if (paypal.HostedFields.isEligible()) {
                 if (orderData.debug_id) msg += " (" + orderData.debug_id + ")";
                 return alert(msg); // Show a failure message
               }
+              const myButton = document.getElementById("formPayButton");
+              myButton.disabled = false;
+              myButton.style = "background: #FFA000";
               // Show a success message or redirect
               window.location.href = "thankyou.html";
             });
         })
         .catch((err) => {
+          const myButton = document.getElementById("formPayButton");
+          myButton.disabled = false;
+          myButton.style = "background: #FFA000";
           alert("Payment could not be captured! " + JSON.stringify(err));
         });
     });
