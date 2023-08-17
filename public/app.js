@@ -1,50 +1,3 @@
-paypal
-  .Buttons({
-    // Sets up the transaction when a payment button is clicked
-    createOrder: function () {
-      return fetch("/api/orders", {
-        method: "post",
-        // use the "body" param to optionally pass additional order information
-        // like product skus and quantities
-        body: JSON.stringify({
-          cart: [
-            {
-              sku: "<YOUR_PRODUCT_STOCK_KEEPING_UNIT>",
-              quantity: "<YOUR_PRODUCT_QUANTITY>",
-            },
-          ],
-        }),
-      })
-        .then((response) => response.json())
-        .then((order) => order.id);
-    },
-    // Finalize the transaction after payer approval
-    onApprove: function (data) {
-      return fetch(`/api/orders/${data.orderID}/capture`, {
-        method: "post",
-      })
-        .then((response) => response.json())
-        .then((orderData) => {
-          // Successful capture! For dev/demo purposes:
-          console.log(
-            "Capture result",
-            orderData,
-            JSON.stringify(orderData, null, 2)
-          );
-          const transaction = orderData.purchase_units[0].payments.captures[0];
-          alert(`Transaction ${transaction.status}: ${transaction.id}
-
-            See console for all available details
-          `);
-          // When ready to go live, remove the alert and show a success message within this page. For example:
-          // var element = document.getElementById('paypal-button-container');
-          // element.innerHTML = '<h3>Thank you for your payment!</h3>';
-          // Or go to another URL:  actions.redirect('thank_you.html');
-        });
-    },
-  })
-  .render("#paypal-button-container");
-
 // If this returns false or the card fields aren't visible, see Step #1.
 if (paypal.HostedFields.isEligible()) {
   let orderId;
@@ -97,38 +50,38 @@ if (paypal.HostedFields.isEligible()) {
   }).then((cardFields) => {
     document.querySelector("#card-form").addEventListener("submit", (event) => {
       event.preventDefault();
+      const myButton = document.getElementById("formPayButton");
+      myButton.disabled = true;
+      myButton.classList.add("loading");
       cardFields
         .submit({
           // Cardholder's first and last name
-          cardholderName: document.getElementById("card-holder-name").value,
+          // cardholderName: document.getElementById("card-holder-name").value,
           // Billing Address
-          billingAddress: {
-            // Street address, line 1
-            streetAddress: document.getElementById(
-              "card-billing-address-street"
-            ).value,
-            // Street address, line 2 (Ex: Unit, Apartment, etc.)
-            extendedAddress: document.getElementById(
-              "card-billing-address-unit"
-            ).value,
-            // State
-            region: document.getElementById("card-billing-address-state").value,
-            // City
-            locality: document.getElementById("card-billing-address-city")
-              .value,
-            // Postal Code
-            postalCode: document.getElementById("card-billing-address-zip")
-              .value,
-            // Country Code
-            countryCodeAlpha2: document.getElementById(
-              "card-billing-address-country"
-            ).value,
-          },
+          // billingAddress: {
+          //   // Street address, line 1
+          //   streetAddress: document.getElementById(
+          //     "card-billing-address-street"
+          //   ).value,
+          //   // Street address, line 2 (Ex: Unit, Apartment, etc.)
+          //   extendedAddress: document.getElementById(
+          //     "card-billing-address-unit"
+          //   ).value,
+          //   // State
+          //   region: document.getElementById("card-billing-address-state").value,
+          //   // City
+          //   locality: document.getElementById("card-billing-address-city")
+          //     .value,
+          //   // Postal Code
+          //   postalCode: document.getElementById("card-billing-address-zip")
+          //     .value,
+          //   // Country Code
+          //   countryCodeAlpha2: document.getElementById(
+          //     "card-billing-address-country"
+          //   ).value,
+          // },
         })
         .then(() => {
-          const myButton = document.getElementById("formPayButton");
-          myButton.disabled = true;
-          myButton.style = "background: aliceblue";
           fetch(`/api/orders/${orderId}/capture`, {
             method: "post",
           })
@@ -150,7 +103,8 @@ if (paypal.HostedFields.isEligible()) {
               }
               const myButton = document.getElementById("formPayButton");
               myButton.disabled = false;
-              myButton.style = "background: #FFA000";
+
+              myButton.classList.remove("loading");
               // Show a success message or redirect
               window.location.href = "thankyou.html";
             });
@@ -158,7 +112,8 @@ if (paypal.HostedFields.isEligible()) {
         .catch((err) => {
           const myButton = document.getElementById("formPayButton");
           myButton.disabled = false;
-          myButton.style = "background: #FFA000";
+
+          myButton.classList.remove("loading");
           alert("Payment could not be captured! " + JSON.stringify(err));
         });
     });

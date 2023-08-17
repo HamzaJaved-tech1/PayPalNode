@@ -1,0 +1,56 @@
+.btn {
+     position: relative;
+     display: inline-flex;
+     align-items: center;
+     justify-content: center;
+     padding: 10px 20px;
+     background-color: #007bff;
+     color: white;
+     border: none;
+     cursor: pointer;
+     overflow: hidden;
+}
+
+.spinner {
+     position: relative;
+     top: 25px !important;
+     /* margin-top: 0px !important; */
+     /* right: -11px; */
+     width: 20px;
+     height: 20px;
+     border: 3px solid rgba(6, 6, 6, 0.3);
+     border-radius: 50%;
+     border-top-color: rgb(22, 21, 21);
+     animation: spin 1s linear infinite;
+     visibility: hidden;
+}
+
+
+.btn:disabled {
+     opacity: 0.6;
+     cursor: not-allowed;
+}
+
+input:disabled {
+     opacity: 0.6;
+     cursor: not-allowed;
+}
+
+
+@keyframes spin {
+     0% {
+          transform: rotate(0deg);
+     }
+
+     100% {
+          transform: rotate(360deg);
+     }
+}
+
+.btn.loading .spinner {
+     visibility: visible;
+}
+
+.btn.loading .button-text {
+     visibility: hidden;
+}
