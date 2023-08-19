@@ -36,6 +36,23 @@ input:disabled {
      cursor: not-allowed;
 }
 
+#formPayButton {
+     width: 100%;
+}
+
+.powered-by {
+     margin-bottom: 20px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     flex-direction: column;
+}
+
+.powered-by img {
+     width: 120px;
+     height: auto;
+     margin-bottom: 10px;
+}
 
 @keyframes spin {
      0% {
@@ -53,4 +70,8 @@ input:disabled {
 
 .btn.loading .button-text {
      visibility: hidden;
+}
+
+.card_container {
+     box-sizing: border-box !important;
 }

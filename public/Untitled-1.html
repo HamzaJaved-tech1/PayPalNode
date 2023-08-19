@@ -1,0 +1,42 @@
+<body>
+     <div class="card_container">
+
+          <div class="powered-by">
+               <img src="paypal.png" alt="PayPal Logo">
+               <span>Powered by PayPal</span>
+          </div>
+
+          <form id="card-form">
+               <label for="card-number">Card Number</label>
+               <div id="card-number" class="card_field"></div>
+               <div style="display: flex; flex-direction: row;">
+                    <div>
+                         <label for="expiration-date">Expiration Date</label>
+                         <div id="expiration-date" class="card_field"></div>
+                    </div>
+                    <div style="margin-left: 10px;">
+                         <label for="cvv">CVV</label>
+                         <div id="cvv" class="card_field"></div>
+                    </div>
+               </div>
+
+               <input type="text" id="card-holder-name" name="card-holder-name" autocomplete="off"
+                    placeholder="card holder name" hidden />
+
+               <div>
+
+                    <input type="text" id="card-billing-address-country" value="CA" name="card-billing-address-country"
+                         autocomplete="off" placeholder="country code" disabled hidden />
+               </div>
+               <br /><br />
+               <!-- ...Your previous HTML code... -->
+               <button value="submit" id="formPayButton" class="btn">
+                    <span class="button-text">Pay</span>
+                    <span class="spinner"></span>
+               </button>
+          </form>
+     </div>
+
+</body>
+
+</html>
