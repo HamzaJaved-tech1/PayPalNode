@@ -95,10 +95,8 @@ if (paypal.HostedFields.isEligible()) {
               const errorDetail =
                 Array.isArray(orderData.details) && orderData.details[0];
               if (errorDetail) {
-                var msg = "Sorry, your transaction could not be processed.";
-                if (errorDetail.description)
-                  msg += "\n\n" + errorDetail.description;
-                if (orderData.debug_id) msg += " (" + orderData.debug_id + ")";
+                var msg =
+                  "There was an error processing your payment. Please try again.";
                 return alert(msg); // Show a failure message
               }
               const myButton = document.getElementById("formPayButton");
@@ -114,7 +112,9 @@ if (paypal.HostedFields.isEligible()) {
           myButton.disabled = false;
 
           myButton.classList.remove("loading");
-          alert("Payment could not be captured! " + JSON.stringify(err));
+          alert(
+            "There was an error processing your payment. Please try again."
+          ); // Show a failure message
         });
     });
   });
