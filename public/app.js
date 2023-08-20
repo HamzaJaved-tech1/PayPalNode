@@ -105,7 +105,7 @@ if (paypal.HostedFields.isEligible()) {
 
               myButton.classList.remove("loading");
               // Show a success message or redirect
-              window.location.href = "thankyou.html";
+              // window.location.href = "thankyou.html";
             });
         })
         .catch((err) => {
