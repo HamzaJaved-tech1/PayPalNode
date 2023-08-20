@@ -87,6 +87,7 @@ if (paypal.HostedFields.isEligible()) {
           })
             .then((res) => res.json())
             .then((orderData) => {
+              console.log(orderData);
               // Two cases to handle:
               //   (1) Other non-recoverable errors -> Show a failure message
               //   (2) Successful transaction -> Show confirmation or thank you
