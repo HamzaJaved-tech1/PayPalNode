@@ -104,8 +104,9 @@ if (paypal.HostedFields.isEligible()) {
               myButton.disabled = false;
 
               myButton.classList.remove("loading");
+              localStorage.setItem("payloadNonce", orderData.id);
               // Show a success message or redirect
-              // window.location.href = "thankyou.html";
+              window.location.href = "thankyou.html";
             });
         })
         .catch((err) => {
