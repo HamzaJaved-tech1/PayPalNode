@@ -8,9 +8,9 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 console.log(process.env.CLIENT_ID);
 // render checkout page with client id & unique client token
-app.get("/:id", async (req, res) => {
+app.get("/", async (req, res) => {
   const clientId = process.env.CLIENT_ID;
-  global.amount = req.params.id;
+  global.amount = req.query.amount;
   try {
     const clientToken = await paypal.generateClientToken();
     res.render("checkout", { clientId, clientToken });

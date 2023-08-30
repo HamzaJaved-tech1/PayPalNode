@@ -7,6 +7,7 @@ const base = "https://api-m.sandbox.paypal.com";
 // call the create order method
 export async function createOrder() {
   const purchaseAmount = global.amount || null; // TODO: pull prices from a database
+  console.log("Amount is", purchaseAmount);
   const accessToken = await generateAccessToken();
   const url = `${base}/v2/checkout/orders`;
   const response = await fetch(url, {
