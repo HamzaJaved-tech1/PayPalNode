@@ -102,11 +102,26 @@ if (paypal.HostedFields.isEligible()) {
               }
               const myButton = document.getElementById("formPayButton");
               myButton.disabled = false;
-
+              fetch(
+                "https://shoptherocknl.ca/str-2.0/str-app/minions/paypal-logs",
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    purchase_id: orderData.id,
+                    purchase_amount:
+                      orderData.purchase_units[0].payments.captures[0].amount
+                        .value,
+                    purchase_status: orderData.status,
+                  }),
+                }
+              );
               myButton.classList.remove("loading");
               localStorage.setItem("payloadNonce", orderData.id);
               // Show a success message or redirect
-              window.location.href = "thankyou.html";
+              // window.location.href = "thankyou.html";
             });
         })
         .catch((err) => {
