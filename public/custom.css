@@ -55,6 +55,27 @@ input:disabled {
      margin-bottom: 10px;
 }
 
+.field-label {
+     font-size: 14px;
+}
+
+
+@media screen and (max-width: 480px) {}
+
+
+@media screen and (min-width: 480px) {
+     .multiple-row {
+          display: flex;
+          flex-direction: row;
+     }
+
+     .cvv-field {
+          margin-left: 10px;
+     }
+}
+
+
+
 @keyframes spin {
      0% {
           transform: rotate(0deg);

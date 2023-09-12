@@ -50,6 +50,16 @@ if (paypal.HostedFields.isEligible()) {
   }).then((cardFields) => {
     document.querySelector("#card-form").addEventListener("submit", (event) => {
       event.preventDefault();
+      if (
+        cardFields?._state.fields.cvv.isEmpty ||
+        cardFields?._state.fields.expirationDate.isEmpty ||
+        cardFields?._state.fields.number.isEmpty
+      ) {
+        alert(
+          "Please fill in all the required fields correctly before proceeding with payment."
+        );
+        return;
+      }
       const myButton = document.getElementById("formPayButton");
       myButton.disabled = true;
       myButton.classList.add("loading");
