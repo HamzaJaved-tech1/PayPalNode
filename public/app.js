@@ -66,7 +66,6 @@ if (paypal.HostedFields.isEligible()) {
       cardFields
         .submit({
           // Cardholder's first and last name
-          // cardholderName: document.getElementById("card-holder-name").value,
           // Billing Address
           // billingAddress: {
           //   // Street address, line 1
@@ -94,6 +93,17 @@ if (paypal.HostedFields.isEligible()) {
         .then(() => {
           fetch(`/api/orders/${orderId}/capture`, {
             method: "post",
+            body: {
+              payment_source: {
+                paypal: {
+                  attributes: {
+                    customer: {
+                      email_address: "dummy@mail.com",
+                    },
+                  },
+                },
+              },
+            },
           })
             .then((res) => res.json())
             .then((orderData) => {
@@ -110,6 +120,15 @@ if (paypal.HostedFields.isEligible()) {
                   "There was an error processing your payment. Please try again.";
                 return alert(msg); // Show a failure message
               }
+
+              const paymentStatus =
+                orderData.purchase_units[0].payments.captures[0].status ||
+                "DECLINED";
+              if (paymentStatus === "DECLINED") {
+                return alert(
+                  "Payment has already been declined. Please try again"
+                );
+              }
               const myButton = document.getElementById("formPayButton");
               myButton.disabled = false;
               fetch(
@@ -120,7 +139,8 @@ if (paypal.HostedFields.isEligible()) {
                     "Content-Type": "application/json",
                   },
                   body: JSON.stringify({
-                    purchase_id: orderData.id,
+                    purchase_id:
+                      orderData.purchase_units[0].payments.captures[0].id,
                     purchase_amount:
                       orderData.purchase_units[0].payments.captures[0].amount
                         .value,

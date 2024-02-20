@@ -2,12 +2,14 @@ import fetch from "node-fetch";
 
 // set some important variables
 const { CLIENT_ID, APP_SECRET } = process.env;
-const base = "https://api.paypal.com";
+// const base = "https://api.paypal.com";
 
+const base = "https://api-m.sandbox.paypal.com";
 // call the create order method
 export async function createOrder() {
   const purchaseAmount = global.amount || null; // TODO: pull prices from a database
-  console.log("Amount is", purchaseAmount);
+  const name = global.name || "Paypal user";
+  const email = global.email || "Paypal user";
   const accessToken = await generateAccessToken();
   const url = `${base}/v2/checkout/orders`;
   const response = await fetch(url, {
@@ -18,6 +20,7 @@ export async function createOrder() {
     },
     body: JSON.stringify({
       intent: "CAPTURE",
+
       purchase_units: [
         {
           amount: {
@@ -26,6 +29,12 @@ export async function createOrder() {
           },
         },
       ],
+      payer: {
+        email_address: email,
+        name: {
+          given_name: email,
+        },
+      },
     }),
   });
 

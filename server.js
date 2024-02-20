@@ -11,6 +11,8 @@ console.log(process.env.CLIENT_ID);
 app.get("/", async (req, res) => {
   const clientId = process.env.CLIENT_ID;
   global.amount = req.query.amount;
+  global.name = req.query.name;
+  global.email = req.query.email;
   try {
     const clientToken = await paypal.generateClientToken();
     res.render("checkout", { clientId, clientToken });
