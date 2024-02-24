@@ -151,7 +151,10 @@ if (paypal.HostedFields.isEligible()) {
                 .then((response) => response.json())
                 .then((response) => {
                   myButton.classList.remove("loading");
-                  localStorage.setItem("payloadNonce", orderData.id);
+                  localStorage.setItem(
+                    "payloadNonce",
+                    orderData.purchase_units[0].payments.captures[0].id
+                  );
                 });
 
               // Show a success message or redirect
