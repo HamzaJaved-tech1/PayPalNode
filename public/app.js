@@ -1,4 +1,5 @@
 // If this returns false or the card fields aren't visible, see Step #1.
+
 if (paypal.HostedFields.isEligible()) {
   let orderId;
 
@@ -55,9 +56,12 @@ if (paypal.HostedFields.isEligible()) {
         cardFields?._state.fields.expirationDate.isEmpty ||
         cardFields?._state.fields.number.isEmpty
       ) {
-        alert(
-          "Please fill in all the required fields correctly before proceeding with payment."
-        );
+        Swal.fire({
+          title: "Error!",
+          text: "Please fill in all the required fields correctly before proceeding with payment.",
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
         return;
       }
       const myButton = document.getElementById("formPayButton");
@@ -118,16 +122,27 @@ if (paypal.HostedFields.isEligible()) {
               if (errorDetail) {
                 var msg =
                   "There was an error processing your payment. Please try again.";
-                return alert(msg); // Show a failure message
+
+                Swal.fire({
+                  title: "Error!",
+                  text: msg,
+                  icon: "error",
+                  confirmButtonText: "Ok",
+                });
+                return;
               }
 
               const paymentStatus =
                 orderData.purchase_units[0].payments.captures[0].status ||
                 "DECLINED";
               if (paymentStatus === "DECLINED") {
-                return alert(
-                  "Payment has already been declined. Please try again"
-                );
+                Swal.fire({
+                  title: "Error!",
+                  text: "Payment has already been declined. Please try again",
+                  icon: "error",
+                  confirmButtonText: "Ok",
+                });
+                return;
               }
               const myButton = document.getElementById("formPayButton");
               myButton.disabled = false;
@@ -166,9 +181,12 @@ if (paypal.HostedFields.isEligible()) {
           myButton.disabled = false;
 
           myButton.classList.remove("loading");
-          alert(
-            "There was an error processing your payment. Please try again."
-          ); // Show a failure message
+          Swal.fire({
+            title: "Error!",
+            text: "There was an error processing your payment. Please try again.",
+            icon: "error",
+            confirmButtonText: "Ok",
+          });
         });
     });
   });
