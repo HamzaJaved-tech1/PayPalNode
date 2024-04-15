@@ -59,7 +59,7 @@ if (paypal.HostedFields.isEligible()) {
         Swal.fire({
           title: "Error!",
           text: "Please fill in all the required fields correctly before proceeding with payment.",
-          icon: "error",
+
           confirmButtonText: "Ok",
         });
         return;
@@ -126,7 +126,6 @@ if (paypal.HostedFields.isEligible()) {
                 Swal.fire({
                   title: "Error!",
                   text: msg,
-                  icon: "error",
                   confirmButtonText: "Ok",
                 });
                 return;
@@ -139,7 +138,7 @@ if (paypal.HostedFields.isEligible()) {
                 Swal.fire({
                   title: "Error!",
                   text: "Payment has already been declined. Please try again",
-                  icon: "error",
+
                   confirmButtonText: "Ok",
                 });
                 return;
@@ -184,7 +183,7 @@ if (paypal.HostedFields.isEligible()) {
           Swal.fire({
             title: "Error!",
             text: "There was an error processing your payment. Please try again.",
-            icon: "error",
+
             confirmButtonText: "Ok",
           });
         });
