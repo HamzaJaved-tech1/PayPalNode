@@ -1,3 +1,7 @@
+body {
+     font-family: 'Poppins', sans-serif !important;
+}
+
 .btn {
      position: relative;
      display: inline-flex;
