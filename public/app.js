@@ -146,7 +146,7 @@ if (paypal.HostedFields.isEligible()) {
               const myButton = document.getElementById("formPayButton");
               myButton.disabled = false;
               fetch(
-                "https://shoptherocknl.ca/str-dev/str-2.0/str-app/minions/paypal-logs",
+                "https://shoptherocknl.ca/str-2.0/str-app/minions/paypal-logs",
                 {
                   method: "POST",
                   headers: {
